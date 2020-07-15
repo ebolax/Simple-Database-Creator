@@ -1,0 +1,33 @@
+{
+  "name": "simple-database-creator",
+  "version": "1.0.0",
+  "description": "Creates simple databases with upload files.",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "php",
+	  "database",
+    "datatables",
+    "editor",
+    "json"
+  ],
+  "author": "ebolax",
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.4.4",
+    "bootstrap": "^4.5.0",
+    "datatables": "^1.10.18",
+    "datatables.net-bs4": "^1.10.21",
+    "font-awesome": "^4.7.0",
+    "grunt": "^1.2.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "jquery": "^3.5.1",
+    "jquery-timepicker": "^1.3.3",
+    "jquery-ui-dist": "^1.12.1",
+    "jquery-ui-themes": "^1.12.0",
+    "jquery.json-viewer": "^1.4.0",
+    "lity-v2": "^2.3.2"
+  }
+}

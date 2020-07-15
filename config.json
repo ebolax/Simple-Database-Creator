@@ -1,0 +1,23 @@
+{
+    "version": "1.0.0",
+    "encoding": "UTF-8",
+    "database_json_path": "database/database.json",
+    "server": "do_json.php",
+    "database_tablename": "table1",
+    "json_pretty_print": true,
+    "uploads_path": "uploads/",
+    "pageLength": 10,
+    "columntypes": ["textbox", "textarea", "email", "select", "check", "date", "time", "file", "image", "sound", "video"],
+    "columns":[
+        {
+            "id": "username",
+            "name": "Username",
+            "type": "textbox",
+            "icon": "fa-th-large",
+            "required": true,
+            "default_value": "",
+            "sortable": true,
+            "searchable": true
+        }
+    ]
+}
