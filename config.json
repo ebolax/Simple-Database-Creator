@@ -1,5 +1,4 @@
 {
-    "version": "1.0.0",
     "encoding": "UTF-8",
     "database_json_path": "database/database.json",
     "server": "do_json.php",
