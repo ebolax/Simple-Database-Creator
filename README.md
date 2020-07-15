@@ -1,1 +1,1 @@
-# PHP-Database-Creator
+# Simple-Database-Creator
