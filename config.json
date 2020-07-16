@@ -1,11 +1,12 @@
 {
     "encoding": "UTF-8",
-    "database_json_path": "database/database.json",
+    "database_path": "database/database.json",
     "server": "do_json.php",
     "database_tablename": "table1",
     "json_pretty_print": true,
     "uploads_path": "uploads/",
     "pageLength": 10,
+    "id_field_name": "_id_",
     "columntypes": ["textbox", "textarea", "email", "select", "check", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {
@@ -17,6 +18,13 @@
             "default_value": "",
             "sortable": true,
             "searchable": true
+        },
+		{
+            "id": "image",
+            "name": "Image",
+            "type": "image",
+            "icon": "fa-image",
+            "required": false
         }
     ]
 }

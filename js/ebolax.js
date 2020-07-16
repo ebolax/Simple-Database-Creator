@@ -33,9 +33,9 @@ $(function ()
 
             for (var a in config.columns)
             {
-                if (config.columns[a].id == "_id")
+                if (config.columns[a].id == config.id_field_name)
                 {
-                    alert("Column id cannot be '_id', Error in Column Name: " + config.columns[a].name);
+                    alert("Column id cannot be '" + config.id_field_name + "', Error in Column Name: " + config.columns[a].name);
                     return;
                 }
             }
@@ -86,7 +86,7 @@ function setup()
     // SET TABLE HEADS
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------
     var table_heads = "";
-    table_heads += '<th class="column-id">_id</th>'; // id column
+    table_heads += '<th class="column-id">' + config.id_field_name + '</th>'; // id column
     for (var a in config.columns)
     {
         table_heads += '<th>' + config.columns[a].name + '</th>'; // id column
@@ -171,6 +171,20 @@ function setup()
                 form_fields += '</div>';
 
                 break;
+
+            case "image":
+                // TODO: Image ve file silmek icin sistem yaz.
+
+                form_fields += '<div class="form-group">';
+                form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
+                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href="" target="_blank"><img class="image img-thumbnail" id="' + config.columns[a].id  + '_image" /></a></p>';
+                form_fields += '    <div class="custom-file">';
+                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
+                form_fields += '    </div>';
+                form_fields += '</div>';
+
+                break;
         }
     }
 
@@ -212,9 +226,11 @@ function setup()
     {
         e.preventDefault();
 
+        var job = $(this).data("job");
+
         $.ajax({
             type: 'POST',
-            url: config.server + "?job=" + $(this).data("job") + "&id=" + $(this).data("id"),
+            url: config.server + "?job=" + job + "&id=" + $(this).data("id"),
             data: new FormData(this),
             dataType: 'json',
             contentType: false,
@@ -232,8 +248,8 @@ function setup()
                 }
                 else
                 {
-                    console.log( $(this).data("job") + ": " + response.id);
-                    alertMessage("Row Successfully " + ($(this).data("job") == "insert" ? "Inserted" : "Updated") + " - id: " + response.insertid, "success");
+                    console.log( job + " done : " + response.id);
+                    alertMessage("Row Successfully " + (job == "insert" ? "Inserted" : "Updated") + " - id: " + response.id, "success");
                 }
 
                 $('#modal_form').modal("hide");
@@ -254,6 +270,9 @@ function setup()
     $(document).on('click', '.delete', function ()
     {
         var id = $(this).data("id");
+
+        console.log("delete start : " + id);
+
         if (confirm("Are you sure you want to remove row id " + id + "?"))
         {
             $.ajax({
@@ -262,9 +281,15 @@ function setup()
                 data: { id: id },
                 success: function (response)
                 {
-                    alertMessage("Row Successfully Deleted - id: " + response.delete_id, "success");
+                    console.log("delete done : " + response.id);
+                    alertMessage("Row Successfully Deleted - id: " + response.id, "success");
                     $('#data_table').DataTable().destroy();
                     fetch_data();
+                },
+                error: function(error)
+                {
+                    alertMessage("Error: " + error, "danger");
+                    console.log('delete error', error);
                 }
             });
         }
@@ -283,7 +308,7 @@ function setup()
 
         for (var a in data)
         {
-            if (id == data[a]._id) form_data = data[a];
+            if (id == data[a][config.id_field_name]) form_data = data[a];
         }
 
         $("#form").data("job", "update");
@@ -328,10 +353,17 @@ function setup()
                     $("#form #" + config.columns[a].id + "_link").text(form_data[config.columns[a].id]).attr('href', config.uploads_path + form_data[config.columns[a].id]);
 
                     break;
+
+                case "image":
+
+                    $("#form #" + config.columns[a].id + "_link").attr('href', config.uploads_path + form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id + "_image").attr("src", config.uploads_path + form_data[config.columns[a].id]);
+
+                    break;
             }
         }
 
-        console.log("update: " + id);
+        console.log("update start : " + id);
 
         $('#modal_form').modal("show");
     });
@@ -353,7 +385,7 @@ function setup()
             $(".focus").get(0).focus();
         }, 100);
 
-        console.log("insert");
+        console.log("insert start");
 
         $('#modal_form').modal("show");
     });
@@ -392,6 +424,9 @@ function fetch_data()
 
         if (!config.columns[a - 1].searchable || control) searchable_false.push(a);
         if (!config.columns[a - 1].sortable || control) sortable_false.push(a);
+
+        searchable_false.push(config.columns.length + 1);
+        sortable_false.push(config.columns.length + 1);
     }
 
     datatable = $('#data_table').DataTable(
@@ -404,9 +439,9 @@ function fetch_data()
             type: "POST"
         },
         "aoColumnDefs": [
-            { "bSortable": false, "aTargets": searchable_false },
-            { "bSearchable": false, "aTargets": sortable_false },
-            { className: "", "targets": [ 0 ] }
+            { "bSortable": false, "aTargets": sortable_false},
+            { "bSearchable": false, "aTargets": searchable_false },
+            { className: "", "targets": [] }
         ],
         "pageLength": config.pageLength,
         "initComplete": function(settings, json)
@@ -425,10 +460,10 @@ function alertMessage(message, type)
 {
     $('#alert_message').html('<div class="alert alert-' + type + '">' + message + '</div>');
 
-    setInterval(function ()
+    setTimeout(function ()
     {
         $('#alert_message').html('');
-    }, 2000);
+    }, 3000);
 }
 
 function hasDuplicates(arr)

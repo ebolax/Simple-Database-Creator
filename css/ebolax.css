@@ -33,3 +33,30 @@ body
     padding: 10px;
     background-color: #ECECEC;
 }
+
+td
+{
+    vertical-align: middle !important;
+}
+
+#alert_message
+{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+}
+
+.image
+{
+    width: auto;
+    height: 150px;
+}
+
+.list-image
+{
+    width: auto;
+    height: 50px;
+}

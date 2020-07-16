@@ -6,11 +6,9 @@
 
     mb_internal_encoding($config->encoding);
 
-    $version = $config->version;
-
     if (isset($_GET['job']))
     {
-        $db_path = $config->database_json_path;
+        $db_path = $config->database_path;
 
         $job = $_GET['job'];
 
@@ -41,7 +39,7 @@
 
                     foreach ($data as $d)
                     {
-                        if ( strstr(strval($d->_id), strval($search)) )
+                        if ( strstr(strval($d->{$config->id_field_name}), strval($search)) )
                         {
                             $search_data[] = $d;
                             break;
@@ -72,9 +70,9 @@
                     {
                         global $col;
 
-                        if ($order_column == 0) // _id column
+                        if ($order_column == 0) // id column
                         {
-                            $col = '_id';
+                            $col = $config->id_field_name;
                         }
                         else
                         {
@@ -133,27 +131,31 @@
                 {
                     $sub_array = array();
 
-                    $sub_array[] = '<div data-id="' . $d->_id . '" data-column="_id">' . $d->_id . '</div>';
+                    $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $config->id_field_name . '">' . $d->{$config->id_field_name} . '</div>';
 
                     foreach($config->columns as $column)
                     {
                         if ($column->type == "check")
                         {
-                            $sub_array[] = '<div data-id="' . $d->_id . '" data-column="' . $column->id . '">' . implode(",", $d->{$column->id}) . '</div>';
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '">' . implode(",", $d->{$column->id}) . '</div>';
                         }
                         elseif ($column->type == "file")
                         {
-                            $sub_array[] = '<div data-id="' . $d->_id . '" data-column="' . $column->id . '"><a href="' . $config->uploads_path . $d->{$column->id} . '" target="_blank">' . $d->{$column->id} . '</a></div>';
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '"><a href="' . $config->uploads_path . $d->{$column->id} . '" target="_blank">' . $d->{$column->id} . '</a></div>';
+                        }
+                        elseif ($column->type == "image")
+                        {
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '" class="text-center"><a href="' . $config->uploads_path . $d->{$column->id} . '" target="_blank"><img class="list-image img-fluid" src="' . $config->uploads_path . $d->{$column->id} . '" /></a></div>';
                         }
                         else
                         {
-                            $sub_array[] = '<div data-id="' . $d->_id . '" data-column="' . $column->id . '">' . $d->{$column->id} . '</div>';
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '">' . $d->{$column->id} . '</div>';
                         }
                     }
 
                     $sub_array[] = '<div class="d-flex justify-content-around">
-                                        <button type="button" class="btn btn-success btn-xs update" data-id="' . $d->_id . '">Edit</button>
-                                        <button type="button" class="btn btn-danger btn-xs delete" data-id="' . $d->_id . '">Delete</button>
+                                        <button type="button" class="btn btn-success btn-xs update" data-id="' . $d->{$config->id_field_name} . '">Edit</button>
+                                        <button type="button" class="btn btn-danger btn-xs delete" data-id="' . $d->{$config->id_field_name} . '">Delete</button>
                                     </div>';
 
                     $responsedata[] = $sub_array;
@@ -171,15 +173,15 @@
 
                 break;
 
-            case "insert":
+            case "insert": // insert row
 
                 $data = json_decode(file_get_contents($db_path));
 
                 $id = 1;
-                if (count($data) > 0) $id = end($data)->_id + 1;
+                if (count($data) > 0) $id = end($data)->{$config->id_field_name} + 1;
 
                 $new = new stdClass();
-                $new->_id = $id;
+                $new->{$config->id_field_name} = $id;
                 foreach($config->columns as $column)
                 {
                     if ($column->type == "check")
@@ -191,7 +193,7 @@
                             $new->{$column->id}[] = $post;
                         }
                     }
-                    elseif ($column->type == "file")
+                    elseif ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video")
                     {
                         if ($_FILES[$column->id]['name'])
                         {
@@ -209,7 +211,7 @@
                     }
                     else
                     {
-                        $new->{$column->id} = $_POST[$column->id];
+                        $new->{$column->id} = trim($_POST[$column->id]);
                     }
                 }
                 $data[] = $new;
@@ -221,37 +223,7 @@
 
                 break;
 
-            case "delete":
-
-                if(isset($_POST["id"]))
-                {
-                    $data = json_decode(file_get_contents($db_path));
-
-                    $delete_id = $_POST['id'];
-
-                    $newdata = [];
-                    foreach ($data as $key => $value)
-                    {
-                        if ($value->_id != $delete_id)
-                        {
-                            $newdata[] = $value;
-                        }
-                    }
-                    $data = $newdata;
-
-                    $content = json_encode($data, ($config->json_pretty_print ? JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE : JSON_UNESCAPED_UNICODE));
-                    file_put_contents($db_path, $content);
-
-                    $output['delete_id'] = $delete_id;
-                }
-                else
-                {
-                    $output['error'] = "ID not set!";
-                }
-
-                break;
-
-            case "update":
+            case "update": // update row
 
                 if(isset($_GET["id"]))
                 {
@@ -261,7 +233,7 @@
 
                     foreach ($data as $key => $value)
                     {
-                        if ($value->_id == $id)
+                        if ($value->{$config->id_field_name} == $id)
                         {
                             foreach($config->columns as $column)
                             {
@@ -274,7 +246,7 @@
                                         $data[$key]->{$column->id}[] = $post;
                                     }
                                 }
-                                elseif ($column->type == "file")
+                                elseif ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video")
                                 {
                                     if ($_FILES[$column->id]['name'])
                                     {
@@ -292,7 +264,7 @@
                                 }
                                 else
                                 {
-                                    $data[$key]->{$column->id} = $_POST[$column->id];
+                                    $data[$key]->{$column->id} = trim($_POST[$column->id]);
                                 }
                             }
                             break;
@@ -303,6 +275,36 @@
                     file_put_contents($db_path, $content);
 
                     $output['id'] = $id;
+                }
+                else
+                {
+                    $output['error'] = "ID not set!";
+                }
+
+                break;
+
+            case "delete": // delete row
+
+                if(isset($_POST["id"]))
+                {
+                    $data = json_decode(file_get_contents($db_path));
+
+                    $delete_id = $_POST['id'];
+
+                    $newdata = [];
+                    foreach ($data as $key => $value)
+                    {
+                        if ($value->{$config->id_field_name} != $delete_id)
+                        {
+                            $newdata[] = $value;
+                        }
+                    }
+                    $data = $newdata;
+
+                    $content = json_encode($data, ($config->json_pretty_print ? JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE : JSON_UNESCAPED_UNICODE));
+                    file_put_contents($db_path, $content);
+
+                    $output['id'] = $delete_id;
                 }
                 else
                 {
