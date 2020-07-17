@@ -141,47 +141,62 @@ function setup()
 
                 break;
 
-            case "check":
-
-                form_fields += '<div class="form-group">';
-                form_fields += '    <label for="' + config.columns[a].id  + '"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-
-                                    var i = 1;
-                                    for (b in config.columns[a].values)
-                                    {
-                                        form_fields += '<div class="form-check">';
-                                        form_fields += '<input type="checkbox" class="form-check-input mb-3 focus" id="' + config.columns[a].id + config.columns[a].values[b]  + '" name="' + config.columns[a].id  + '[]"  value="' + config.columns[a].values[b]  + '" ' + (config.columns[a].values[b] == config.columns[a].default_value ? 'checked' : '') + ' />';
-                                        form_fields += '<label for="' + config.columns[a].id + config.columns[a].values[b]  + '">' + b  + '</label>';
-                                        form_fields += '</div>';
-                                    }
-
-                form_fields += '</div>';
-
-                break;
-
             case "file":
 
                 form_fields += '<div class="form-group">';
+                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
                 form_fields += '    <label for="' + config.columns[a].id  + '_link"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
                 form_fields += '    <p class="mb-2"><a id="' + config.columns[a].id  + '_link" href="" target="_blank"></a></p>';
                 form_fields += '    <div class="custom-file">';
                 form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
                 form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
                 form_fields += '    </div>';
+                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
                 form_fields += '</div>';
 
                 break;
 
             case "image":
-                // TODO: Image ve file silmek icin sistem yaz.
 
                 form_fields += '<div class="form-group">';
+                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
                 form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href="" target="_blank"><img class="image img-thumbnail" id="' + config.columns[a].id  + '_image" /></a></p>';
+                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""><img class="image img-fluid" id="' + config.columns[a].id  + '_image" src="" /></a></p>';
                 form_fields += '    <div class="custom-file">';
                 form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
-                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
+                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="image/*" />';
                 form_fields += '    </div>';
+                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
+                form_fields += '</div>';
+
+                break;
+
+            case "sound":
+
+                form_fields += '<div class="form-group">';
+                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
+                form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
+                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""></a></p>';
+                form_fields += '    <div class="custom-file">';
+                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="audio/*" />';
+                form_fields += '    </div>';
+                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
+                form_fields += '</div>';
+
+                break;
+
+            case "video":
+
+                form_fields += '<div class="form-group">';
+                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
+                form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
+                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""></a></p>';
+                form_fields += '    <div class="custom-file">';
+                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="video/*" />';
+                form_fields += '    </div>';
+                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
                 form_fields += '</div>';
 
                 break;
@@ -214,11 +229,39 @@ function setup()
         }
     }
 
+    // set clear buttons click
+    $(".btn-clear").on("click", function()
+    {
+        var column_id = $(this).data('id');
+
+        var type = "file";
+        for (var a in config.columns)
+        {
+            if (column_id == config.columns[a].id) type = config.columns[a].type;
+        }
+
+        $("#form #" + column_id).siblings(".custom-file-label").html('');
+        if (type == "file" || type == "sound" || type == "video") $("#form #" + column_id + "_link").text('');
+        $("#form #" + column_id + "_link").attr('href', '');
+        $("#form #" + column_id + "_f").val('');
+        $("#form #" + column_id + "_image").attr("src", '' );
+        $("#form #" + column_id + "_image").hide();
+        $("#form #" + column_id + "_sound").attr("src", '' );
+        $("#form #" + column_id + "_sound").hide();
+        $("#form #" + column_id + "_video").attr("src", '' );
+        $("#form #" + column_id + "_video").hide();
+        $("#form #" + column_id).val('');
+    });
+
+    // write file name while input change
     $(".custom-file-input").on("change", function()
     {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
+
+    // set image visible
+    image_visible_control();
 
     // FORM SUBMIT
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -338,30 +381,69 @@ function setup()
 
                     break;
 
-                case "check":
-
-                    for (var b in form_data[config.columns[a].id])
-                    {
-                        $("#form #" + config.columns[a].id + form_data[config.columns[a].id][b]).prop( "checked", true );
-                    }
-
-                    break;
-
                 case "file":
 
-                    //$("#form #" + config.columns[a].id).siblings(".custom-file-label").addClass("selected").html(form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
                     $("#form #" + config.columns[a].id + "_link").text(form_data[config.columns[a].id]).attr('href', config.uploads_path + form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id + "_f").val(form_data[config.columns[a].id]);
 
                     break;
 
                 case "image":
 
-                    $("#form #" + config.columns[a].id + "_link").attr('href', config.uploads_path + form_data[config.columns[a].id]);
-                    $("#form #" + config.columns[a].id + "_image").attr("src", config.uploads_path + form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").attr('href', 'javascript: openImage("' + config.uploads_path + form_data[config.columns[a].id] + '");');
+                    $("#form #" + config.columns[a].id + "_f").val(form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id + "_image").attr("src", (form_data[config.columns[a].id] != '' ? config.uploads_path + form_data[config.columns[a].id] : '') );
+                    if (form_data[config.columns[a].id] != "")
+                    {
+                        $("#form #" + config.columns[a].id + "_image").show();
+                    }
+                    else
+                    {
+                        $("#form #" + config.columns[a].id + "_image").hide();
+                    }
+
+                    break;
+
+                case "sound":
+
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").text(form_data[config.columns[a].id]).attr('href', 'javascript: openSound("' + config.uploads_path + form_data[config.columns[a].id] + '");');
+                    $("#form #" + config.columns[a].id + "_f").val(form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id + "_sound").attr("src", (form_data[config.columns[a].id] != '' ? config.uploads_path + form_data[config.columns[a].id] : '') );
+                    if (form_data[config.columns[a].id] != "")
+                    {
+                        $("#form #" + config.columns[a].id + "_sound").show();
+                    }
+                    else
+                    {
+                        $("#form #" + config.columns[a].id + "_sound").hide();
+                    }
+
+                    break;
+
+                case "video":
+
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").text(form_data[config.columns[a].id]).attr('href', 'javascript: openVideo("' + config.uploads_path + form_data[config.columns[a].id] + '");');
+                    $("#form #" + config.columns[a].id + "_f").val(form_data[config.columns[a].id]);
+                    $("#form #" + config.columns[a].id + "_video").attr("src", (form_data[config.columns[a].id] != '' ? config.uploads_path + form_data[config.columns[a].id] : '') );
+                    if (form_data[config.columns[a].id] != "")
+                    {
+                        $("#form #" + config.columns[a].id + "_video").show();
+                    }
+                    else
+                    {
+                        $("#form #" + config.columns[a].id + "_video").hide();
+                    }
 
                     break;
             }
         }
+
+        // set image visible
+        image_visible_control();
 
         console.log("update start : " + id);
 
@@ -380,10 +462,69 @@ function setup()
         $('#form')[0].reset();
         $("textarea").text('');
 
+        for (var a in config.columns)
+        {
+            switch (config.columns[a].type)
+            {
+                case "textbox":
+                case "email":
+                case "select":
+                case "date":
+                case "time":
+
+                    $("#form #" + config.columns[a].id).val(config.columns[a].default_value);
+
+                    break;
+
+                case "textarea":
+
+                    $("#form #" + config.columns[a].id).text(config.columns[a].default_value);
+
+                    break;
+
+                case "file":
+
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").text('').attr('href', '');
+                    $("#form #" + config.columns[a].id + "_f").val('');
+
+                    break;
+
+                case "image":
+
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").attr('href', '');
+                    $("#form #" + config.columns[a].id + "_f").val('');
+                    $("#form #" + config.columns[a].id + "_image").attr("src", '');
+                    $("#form #" + config.columns[a].id + "_image").hide();
+
+                    break;
+
+                case "sound":
+
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").text('').attr('href', '');
+                    $("#form #" + config.columns[a].id + "_f").val('');
+
+                    break;
+
+                case "video":
+
+                    $("#form #" + config.columns[a].id).siblings(".custom-file-label").html('');
+                    $("#form #" + config.columns[a].id + "_link").text('').attr('href', '');
+                    $("#form #" + config.columns[a].id + "_f").val('');
+
+                    break;
+            }
+        }
+
         setTimeout(function ()
         {
             $(".focus").get(0).focus();
         }, 100);
+
+        // set image visible
+        image_visible_control();
 
         console.log("insert start");
 
@@ -414,7 +555,6 @@ function fetch_data()
 
         if ( config.columns[a - 1].type == "textarea" ||
              config.columns[a - 1].type == "select" ||
-             config.columns[a - 1].type == "check" ||
              config.columns[a - 1].type == "file" ||
              config.columns[a - 1].type == "date" ||
              config.columns[a - 1].type == "time" ||
@@ -429,6 +569,17 @@ function fetch_data()
         sortable_false.push(config.columns.length + 1);
     }
 
+    var columnDefs = [];
+    columnDefs.push( { "bSortable": false, "aTargets": sortable_false } );
+    columnDefs.push( { "bSearchable": false, "aTargets": searchable_false } );
+    columnDefs.push( { width: "30px", "targets": [0] } );
+    columnDefs.push( { width: "80px", "targets": [config.columns.length + 1] } );
+    for (var a in config.columns)
+    {
+        columnDefs.push( { width: (config.columns[a].width ? config.columns[a].width : "100px") , "targets": [parseInt(a) + 1] } );
+    }
+    console.log(columnDefs);
+
     datatable = $('#data_table').DataTable(
     {
         "processing": true,
@@ -438,11 +589,7 @@ function fetch_data()
             url: config.server + "?job=fetch",
             type: "POST"
         },
-        "aoColumnDefs": [
-            { "bSortable": false, "aTargets": sortable_false},
-            { "bSearchable": false, "aTargets": searchable_false },
-            { className: "", "targets": [] }
-        ],
+        "aoColumnDefs": columnDefs,
         "pageLength": config.pageLength,
         "initComplete": function(settings, json)
         {
@@ -479,4 +626,34 @@ function hasDuplicates(arr)
     }
 
     return false;
+}
+
+function image_visible_control()
+{
+    $('#form .image').each(function()
+    {
+        if ($(this).attr('src') == "")
+        {
+            $(this).hide();
+        }
+        else
+        {
+            $(this).show();
+        }
+    });
+}
+
+function openImage(src)
+{
+    lity(src);
+}
+
+function openSound(src)
+{
+    lity(src);
+}
+
+function openVideo(src)
+{
+    lity(src);
 }

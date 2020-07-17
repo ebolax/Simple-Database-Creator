@@ -7,24 +7,18 @@
     "uploads_path": "uploads/",
     "pageLength": 10,
     "id_field_name": "_id_",
-    "columntypes": ["textbox", "textarea", "email", "select", "check", "date", "time", "file", "image", "sound", "video"],
+    "columntypes": ["textbox", "textarea", "email", "select", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {
             "id": "username",
             "name": "Username",
             "type": "textbox",
+            "width": "200px",
             "icon": "fa-th-large",
             "required": true,
             "default_value": "",
             "sortable": true,
             "searchable": true
-        },
-		{
-            "id": "image",
-            "name": "Image",
-            "type": "image",
-            "icon": "fa-image",
-            "required": false
         }
     ]
 }

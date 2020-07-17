@@ -8,13 +8,14 @@
     "uploads_path": "uploads/",
     "pageLength": 10,
     "id_field_name": "_id",
-    "columntypes": ["textbox", "textarea", "email", "select", "check", "date", "time", "file", "image", "sound", "video"],
+    "columntypes": ["textbox", "textarea", "email", "select", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {
             "id": "username",
             "name": "Username",
             "type": "textbox",
             "icon": "fa-th-large",
+            "width": "100px",
             "required": true,
             "default_value": "",
             "sortable": true,
@@ -25,6 +26,7 @@
             "name": "Content",
             "type": "textarea",
             "icon": "fa-th-large",
+            "width": "100px",
             "required": false,
             "default_value": ""
         },
@@ -33,6 +35,7 @@
             "name": "Email",
             "type": "email",
             "icon": "fa-at",
+            "width": "100px",
             "required": false,
             "default_value": "",
             "sortable": false,
@@ -43,15 +46,8 @@
             "name": "Select",
             "type": "select",
             "icon": "fa-th-large",
+            "width": "100px",
             "required": true,
-            "values": {"select 10": 10, "select 20": 20},
-            "default_value": 10
-        },
-		{
-            "id": "check",
-            "name": "Checkbox",
-            "type": "check",
-            "icon": "fa-check",
             "values": {"select 10": 10, "select 20": 20},
             "default_value": 10
         },
@@ -60,6 +56,7 @@
             "name": "Date",
             "type": "date",
             "icon": "fa-calendar",
+            "width": "100px",
             "required": false,
             "default_value": "12.08.2019",
             "dateFormat": "dd.mm.yy"
@@ -69,6 +66,7 @@
             "name": "Time",
             "type": "time",
             "icon": "fa-clock-o",
+            "width": "100px",
             "required": false,
             "default_value": "",
             "timeFormat": "HH:mm"
@@ -78,6 +76,31 @@
             "name": "File",
             "type": "file",
             "icon": "fa-file",
+            "width": "100px",
+            "required": false
+        },
+		{
+            "id": "image",
+            "name": "Image",
+            "type": "image",
+            "icon": "fa-image",
+            "width": "100px",
+            "required": false
+        },
+		{
+            "id": "sound",
+            "name": "Sound",
+            "type": "sound",
+            "icon": "fa-file-audio-o",
+            "width": "100px",
+            "required": false
+        },
+		{
+            "id": "video",
+            "name": "Video",
+            "type": "video",
+            "icon": "fa-video-camera",
+            "width": "100px",
             "required": false
         }
     ]

@@ -7,6 +7,11 @@ body
     font-size: 12px;
 }
 
+p
+{
+    margin-bottom: 0px;
+}
+
 #version
 {
     font-size: 12px;
@@ -52,11 +57,16 @@ td
 .image
 {
     width: auto;
-    height: 150px;
+    height: 50px;
 }
 
 .list-image
 {
     width: auto;
     height: 50px;
+}
+
+.btn-clear
+{
+    font-size: 12px;
 }

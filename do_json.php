@@ -135,17 +135,33 @@
 
                     foreach($config->columns as $column)
                     {
-                        if ($column->type == "check")
-                        {
-                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '">' . implode(",", $d->{$column->id}) . '</div>';
-                        }
-                        elseif ($column->type == "file")
+                        if ($column->type == "file")
                         {
                             $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '"><a href="' . $config->uploads_path . $d->{$column->id} . '" target="_blank">' . $d->{$column->id} . '</a></div>';
                         }
                         elseif ($column->type == "image")
                         {
-                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '" class="text-center"><a href="' . $config->uploads_path . $d->{$column->id} . '" target="_blank"><img class="list-image img-fluid" src="' . $config->uploads_path . $d->{$column->id} . '" /></a></div>';
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '" class="text-center">
+                                                <a href="javascript:openImage(\'' . $config->uploads_path . $d->{$column->id} . '\');">' .
+                                                    ($d->{$column->id} != '' ? '<img class="list-image img-fluid" src="' . $config->uploads_path . $d->{$column->id} . '" />' : '') .
+                                                '</a>
+                                            </div>';
+                        }
+                        elseif ($column->type == "sound")
+                        {
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '" class="text-center">
+                                                <a href="javascript:openSound(\'' . $config->uploads_path . $d->{$column->id} . '\');">' .
+                                                    $d->{$column->id} .
+                                                '</a>
+                                            </div>';
+                        }
+                        elseif ($column->type == "video")
+                        {
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '" class="text-center">
+                                                <a href="javascript:openVideo(\'' . $config->uploads_path . $d->{$column->id} . '\');">' .
+                                                    $d->{$column->id} .
+                                                '</a>
+                                            </div>';
                         }
                         else
                         {
@@ -184,16 +200,7 @@
                 $new->{$config->id_field_name} = $id;
                 foreach($config->columns as $column)
                 {
-                    if ($column->type == "check")
-                    {
-                        $new->{$column->id} = [];
-
-                        if (isset($_POST[$column->id])) foreach ($_POST[$column->id] as $post)
-                        {
-                            $new->{$column->id}[] = $post;
-                        }
-                    }
-                    elseif ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video")
+                    if ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video")
                     {
                         if ($_FILES[$column->id]['name'])
                         {
@@ -237,16 +244,7 @@
                         {
                             foreach($config->columns as $column)
                             {
-                                if ($column->type == "check")
-                                {
-                                    $data[$key]->{$column->id} = [];
-
-                                    if (isset($_POST[$column->id])) foreach ($_POST[$column->id] as $post)
-                                    {
-                                        $data[$key]->{$column->id}[] = $post;
-                                    }
-                                }
-                                elseif ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video")
+                                if ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video")
                                 {
                                     if ($_FILES[$column->id]['name'])
                                     {
@@ -259,7 +257,15 @@
                                     }
                                     else
                                     {
-                                        $data[$key]->{$column->id} =  '';
+                                        if (isset($_POST[$column->id . '_f']) && $_POST[$column->id . '_f'] != '')
+                                        {
+                                            $data[$key]->{$column->id} = $_POST[$column->id . '_f'];
+                                        }
+                                        else
+                                        {
+                                            @unlink($config->uploads_path . $data[$key]->{$column->id});
+                                            $data[$key]->{$column->id} =  '';
+                                        }
                                     }
                                 }
                                 else
@@ -294,6 +300,14 @@
                     $newdata = [];
                     foreach ($data as $key => $value)
                     {
+                        if ($value->{$config->id_field_name} == $delete_id)
+                        {
+                            foreach($config->columns as $column)
+                            {
+                                if ($column->type == "file" || $column->type == "image" || $column->type == "sound" || $column->type == "video") @unlink($config->uploads_path . $value->{$column->id});
+                            }
+                        }
+
                         if ($value->{$config->id_field_name} != $delete_id)
                         {
                             $newdata[] = $value;
