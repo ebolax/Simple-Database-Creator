@@ -100,33 +100,28 @@ function setup()
 
     for (var a in config.columns)
     {
-        switch (config.columns[a].type)
-        {
-            case "textbox":
-            case "date":
-            case "time":
+        form_fields += '<div class="form-group">';
+        form_fields += '<label for="' + config.columns[a].id  + '"><h6 class="mb-0 text-info"><i class="fa ' + config.columns[a].icon + ' mr-1"></i> ' + config.columns[a].name + ' (' + config.columns[a].id + ')</h6>' + (config.columns[a].description ? '<p class="text-info mb-1">' + config.columns[a].description + '</p>' : '') + '</label>';
 
-                form_fields += '<div class="form-group" class="">';
-                form_fields += '    <label for="' + config.columns[a].id  + '"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <input type="' + (config.columns[a].isEmail ? "email" : "text") + '" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
-                form_fields += '</div>';
+            switch (config.columns[a].type)
+            {
+                case "textbox":
+                case "date":
+                case "time":
 
-                break;
+                    form_fields += '<input type="' + (config.columns[a].isEmail ? "email" : "text") + '" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
 
-            case "textarea":
+                    break;
 
-                form_fields += '<div class="form-group">';
-                form_fields += '    <label for="' + config.columns[a].id  + '"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <textarea class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" rows="3" ' + (config.columns[a].required ? 'required' : '')  + '>' + config.columns[a].default_value  + '</textarea>';
-                form_fields += '</div>';
+                case "textarea":
 
-                break;
+                    form_fields += '<textarea class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" rows="3" ' + (config.columns[a].required ? 'required' : '')  + '>' + config.columns[a].default_value  + '</textarea>';
 
-            case "select":
+                    break;
 
-                form_fields += '<div class="form-group">';
-                form_fields += '    <label for="' + config.columns[a].id  + '"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <select class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" ' + (config.columns[a].required ? 'required' : '')  + '>';
+                case "select":
+
+                    form_fields += '<select class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" ' + (config.columns[a].required ? 'required' : '')  + '>';
 
                                         form_fields += '<option value="">Please Select</option>';
 
@@ -135,71 +130,60 @@ function setup()
                                             form_fields += '<option value="' + config.columns[a].values[b] + '" ' + (config.columns[a].values[b] == config.columns[a].default_value ? 'selected' : '') + '>' + b + '</option>';
                                         }
 
-                form_fields += '    <select>';
-                form_fields += '</div>';
+                    form_fields += '<select>';
 
-                break;
+                    break;
 
-            case "file":
+                case "file":
 
-                form_fields += '<div class="form-group">';
-                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
-                form_fields += '    <label for="' + config.columns[a].id  + '_link"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <p class="mb-2"><a id="' + config.columns[a].id  + '_link" href="" target="_blank"></a></p>';
-                form_fields += '    <div class="custom-file">';
-                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
-                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
-                form_fields += '    </div>';
-                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
-                form_fields += '</div>';
+                    form_fields += '<input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
+                    form_fields += '<p class="mb-2"><a id="' + config.columns[a].id  + '_link" href="" target="_blank"></a></p>';
+                    form_fields += '<div class="custom-file">';
+                    form_fields += '    <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                    form_fields += '    <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
+                    form_fields += '</div>';
+                    form_fields += '<div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
 
-                break;
+                    break;
 
-            case "image":
+                case "image":
 
-                form_fields += '<div class="form-group">';
-                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
-                form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""><img class="image img-fluid" id="' + config.columns[a].id  + '_image" src="" /></a></p>';
-                form_fields += '    <div class="custom-file">';
-                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
-                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="image/*" />';
-                form_fields += '    </div>';
-                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
-                form_fields += '</div>';
+                    form_fields += '<input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
+                    form_fields += '<p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""><img class="image img-fluid" id="' + config.columns[a].id  + '_image" src="" /></a></p>';
+                    form_fields += '<div class="custom-file">';
+                    form_fields += '    <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                    form_fields += '    <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="image/*" />';
+                    form_fields += '</div>';
+                    form_fields += '<div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
 
-                break;
+                    break;
 
-            case "sound":
+                case "sound":
 
-                form_fields += '<div class="form-group">';
-                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
-                form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""></a></p>';
-                form_fields += '    <div class="custom-file">';
-                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
-                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="audio/*" />';
-                form_fields += '    </div>';
-                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
-                form_fields += '</div>';
+                    form_fields += '<input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
+                    form_fields += '<p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""></a></p>';
+                    form_fields += '<div class="custom-file">';
+                    form_fields += '    <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                    form_fields += '    <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="audio/*" />';
+                    form_fields += '</div>';
+                    form_fields += '<div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
 
-                break;
+                    break;
 
-            case "video":
+                case "video":
 
-                form_fields += '<div class="form-group">';
-                form_fields += '    <input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
-                form_fields += '    <label for="' + config.columns[a].id  + '_image"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""></a></p>';
-                form_fields += '    <div class="custom-file">';
-                form_fields += '        <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
-                form_fields += '        <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="video/*" />';
-                form_fields += '    </div>';
-                form_fields += '    <div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
-                form_fields += '</div>';
+                    form_fields += '<input type="hidden" id="' + config.columns[a].id  + '_f" name="' + config.columns[a].id  + '_f" value="" />';
+                    form_fields += '<p class="mb-2 text-center"><a id="' + config.columns[a].id  + '_link" href=""></a></p>';
+                    form_fields += '<div class="custom-file">';
+                    form_fields += '    <label class="custom-file-label" for="' + config.columns[a].id  + '"></label>';
+                    form_fields += '    <input type="file" class="custom-file-input focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' accept="video/*" />';
+                    form_fields += '</div>';
+                    form_fields += '<div class="text-center mt-2"><a id="' + config.columns[a].id  + '_del" name="' + config.columns[a].id  + '_del" data-id="' + config.columns[a].id  + '" class="btn btn-danger text-white btn-clear">Clear</a></div>';
 
-                break;
-        }
+                    break;
+            }
+
+        form_fields += '</div>'; // close div class form-group
     }
 
     $('#modal_form .modal-body').html(form_fields);

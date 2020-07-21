@@ -30,8 +30,8 @@ module.exports = function (grunt)
                     {expand: true, cwd: 'node_modules/lity-v2/dist/', src: ['lity.min.css'], dest: 'css/'},
                     {expand: true, cwd: 'node_modules/jquery.json-viewer/json-viewer/', src: ['jquery.json-viewer.css'], dest: 'css/'},
                     //{expand: true, cwd: 'node_modules/jquery-ui-dist/', src: ['jquery-ui.min.css'], dest: 'css/'},
-                    {expand: true, cwd: 'node_modules/jquery-ui-themes/themes/pepper-grinder/', src: ['jquery-ui.min.css'], dest: 'css/'},
-                    {expand: true, cwd: 'node_modules/jquery-ui-themes/themes/pepper-grinder/images/', src: ['*'], dest: 'css/images/'},
+                    {expand: true, cwd: 'node_modules/jquery-ui-themes/themes/dark-hive/', src: ['jquery-ui.min.css'], dest: 'css/'},
+                    {expand: true, cwd: 'node_modules/jquery-ui-themes/themes/dark-hive/images/', src: ['*'], dest: 'css/images/'},
                     {expand: true, cwd: 'node_modules/jquery-timepicker/', src: ['jquery.timepicker.css'], dest: 'css/'},
 
                     // tinymce

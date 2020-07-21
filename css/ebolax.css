@@ -36,7 +36,8 @@ p
 .form-group
 {
     padding: 10px;
-    background-color: #ECECEC;
+    background-color: #EDEDED;
+    border-radius: 5px;
 }
 
 td

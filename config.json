@@ -13,6 +13,7 @@
             "id": "username",
             "name": "Username",
             "type": "textbox",
+            "description": "Write username in this field",
             "width": "200px",
             "icon": "fa-th-large",
             "required": true,
