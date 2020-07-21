@@ -33,6 +33,14 @@ module.exports = function (grunt)
                     {expand: true, cwd: 'node_modules/jquery-ui-themes/themes/pepper-grinder/', src: ['jquery-ui.min.css'], dest: 'css/'},
                     {expand: true, cwd: 'node_modules/jquery-ui-themes/themes/pepper-grinder/images/', src: ['*'], dest: 'css/images/'},
                     {expand: true, cwd: 'node_modules/jquery-timepicker/', src: ['jquery.timepicker.css'], dest: 'css/'},
+
+                    // tinymce
+                    {expand: true, cwd: 'node_modules/tinymce/', src: ['tinymce.min.js'], dest: 'tinymce/'},
+                    {expand: true, cwd: 'node_modules/tinymce/', src: ['jquery.tinymce.min.js'], dest: 'tinymce/'},
+                    {expand: true, cwd: 'node_modules/tinymce/themes', src: ['**'], dest: 'tinymce/themes/'},
+                    {expand: true, cwd: 'node_modules/tinymce/skins', src: ['**'], dest: 'tinymce/skins/'},
+                    {expand: true, cwd: 'node_modules/tinymce/plugins', src: ['**'], dest: 'tinymce/plugins/'},
+                    {expand: true, cwd: 'node_modules/tinymce/icons', src: ['**'], dest: 'tinymce/icons/'},
                 ]
             }
         },

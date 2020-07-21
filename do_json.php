@@ -1,4 +1,7 @@
 <?php
+    @ini_set('display_errors', 0);
+    @ini_set('display_startup_errors', 0);
+    @error_reporting(E_ALL & ~E_NOTICE);
 
     // get config
     $config = json_decode(file_get_contents('config.json'));
@@ -163,9 +166,13 @@
                                                 '</a>
                                             </div>';
                         }
+                        elseif ($column->type == "textarea")
+                        {
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '">' . get_excerpt ($d->{$column->id}, $column->excerpt_words_count) . '</div>';
+                        }
                         else
                         {
-                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '">' . $d->{$column->id} . '</div>';
+                            $sub_array[] = '<div data-id="' . $d->{$config->id_field_name} . '" data-column="' . $column->id . '">' . (isset($column->bold) && $column->bold ? '<b>' : '') . $d->{$column->id} . (isset($column->bold) && $column->bold ? '</b>' : '') . '</div>';
                         }
                     }
 
@@ -339,4 +346,17 @@
         die();
     }
 
+    function get_excerpt( $content, $length = 40, $more = '...' )
+    {
+        $excerpt = strip_tags( trim( $content ) );
+        $words = str_word_count( $excerpt, 2 );
+        if ( count( $words ) > $length )
+        {
+            $words = array_slice( $words, 0, $length, true );
+            end( $words );
+            $position = key( $words ) + strlen( current( $words ) );
+            $excerpt = substr( $excerpt, 0, $position ) . $more;
+        }
+        return $excerpt;
+    }
 ?>

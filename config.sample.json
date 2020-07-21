@@ -8,7 +8,7 @@
     "uploads_path": "uploads/",
     "pageLength": 10,
     "id_field_name": "_id",
-    "columntypes": ["textbox", "textarea", "email", "select", "date", "time", "file", "image", "sound", "video"],
+    "columntypes": ["textbox", "textarea", "select", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {
             "id": "username",
@@ -19,7 +19,9 @@
             "required": true,
             "default_value": "",
             "sortable": true,
-            "searchable": true
+            "searchable": true,
+            "bold": true,
+            "isEmail": false
         },
 		{
             "id": "content",
@@ -28,18 +30,9 @@
             "icon": "fa-th-large",
             "width": "100px",
             "required": false,
-            "default_value": ""
-        },
-		{
-            "id": "email",
-            "name": "Email",
-            "type": "email",
-            "icon": "fa-at",
-            "width": "100px",
-            "required": false,
             "default_value": "",
-            "sortable": false,
-            "searchable": false
+            "excerpt_words_count": 20,
+            "use_editor": true
         },
 		{
             "id": "select",

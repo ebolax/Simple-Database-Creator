@@ -8,7 +8,7 @@
   },
   "keywords": [
     "php",
-	  "database",
+    "database",
     "datatables",
     "editor",
     "json"
@@ -28,6 +28,7 @@
     "jquery-ui-dist": "^1.12.1",
     "jquery-ui-themes": "^1.12.0",
     "jquery.json-viewer": "^1.4.0",
-    "lity-v2": "^2.3.2"
+    "lity-v2": "^2.3.2",
+    "tinymce": "^5.4.1"
   }
 }

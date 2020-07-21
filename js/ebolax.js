@@ -105,11 +105,10 @@ function setup()
             case "textbox":
             case "date":
             case "time":
-            case "email":
 
                 form_fields += '<div class="form-group" class="">';
                 form_fields += '    <label for="' + config.columns[a].id  + '"><i class="fa ' + config.columns[a].icon + '"></i> ' + config.columns[a].name  + '</label>';
-                form_fields += '    <input type="' + (config.columns[a].type == "email" ? "email" : "text") + '" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
+                form_fields += '    <input type="' + (config.columns[a].isEmail ? "email" : "text") + '" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
                 form_fields += '</div>';
 
                 break;
@@ -260,6 +259,26 @@ function setup()
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
+    // set tinymce
+    for (var a in config.columns)
+    {
+        if (config.columns[a].type == "textarea" && config.columns[a].use_editor)
+        {
+            $('#' + config.columns[a].id).tinymce({
+                script_url : 'tinymce/tinymce.min.js',
+                theme : "silver",
+                toolbar_items_size: 'small',
+                height: 400,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar: 'code | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify'
+             });
+        }
+    }
+
     // set image visible
     image_visible_control();
 
@@ -366,7 +385,6 @@ function setup()
             switch (config.columns[a].type)
             {
                 case "textbox":
-                case "email":
                 case "select":
                 case "date":
                 case "time":
@@ -467,7 +485,6 @@ function setup()
             switch (config.columns[a].type)
             {
                 case "textbox":
-                case "email":
                 case "select":
                 case "date":
                 case "time":
