@@ -12,6 +12,13 @@ p
     margin-bottom: 0px;
 }
 
+.footer
+{
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+}
+
 #version
 {
     font-size: 12px;

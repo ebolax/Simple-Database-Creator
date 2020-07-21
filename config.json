@@ -6,7 +6,7 @@
     "json_pretty_print": true,
     "uploads_path": "uploads/",
     "pageLength": 10,
-    "id_field_name": "_id_",
+    "id_field_name": "_id",
     "columntypes": ["textbox", "textarea", "select", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {

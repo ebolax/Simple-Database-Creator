@@ -1,8 +1,8 @@
 {
   "name": "simple-database-creator",
   "version": "1.0.0",
-  "description": "Creates simple databases with upload files.",
-  "main": "index.php",
+  "description": "Creates Simple Databases with Upload Files Support",
+  "main": "index.htm",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

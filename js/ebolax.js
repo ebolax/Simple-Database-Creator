@@ -455,7 +455,7 @@ function setup()
 
     // ADD (INSERT) BUTTON CLICK
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------
-    $(document).on('click', '#add', function ()
+    $(document).on('click', '#btn_add', function ()
     {
         $('#modal_form .modal-title').text("Add New Row");
 
@@ -530,6 +530,16 @@ function setup()
         console.log("insert start");
 
         $('#modal_form').modal("show");
+    });
+
+    // SHOW JSON DATA BUTTON CLICK
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------
+    $(document).on('click', '#btn_showdata', function ()
+    {
+        var formattedData = JSON.stringify(data, null, '\t');
+        $('#json_output').text(formattedData);
+
+        $('#modal_data').modal("show");
     });
 }
 

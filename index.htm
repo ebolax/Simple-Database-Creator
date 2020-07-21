@@ -5,8 +5,8 @@
 	<head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>DataTables PHP Editor</title>
-        <meta name="description" content="">
+        <title>Simple Database Creator</title>
+        <meta name="description" content="Creates Simple Databases with Upload Files Support">
         <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1, zoom=1">
 
         <link rel="icon" type="image/png" href="images/favicon.png" />
@@ -62,11 +62,31 @@
             </div>
         <!-- ADD NEW / EDIT MODAL FORM -->
 
+        <!-- JSON DATA MODAL -->
+            <div class="modal fade" id="modal_data" tabindex="-1" role="dialog" aria-labelledby="modal_data" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form id="form" action="" data-job="update" data-id="0">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">JSON DATA</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body p-3 mb-3">
+                                <pre id="json_output"></pre>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <!-- JSON DATA MODAL -->
+
         <!-- HEADER -->
-            <div class="container mt-5">
+            <div class="container mt-3">
                 <div class="row">
                     <div class="col text-center">
-                        <h4 id="name">Simple Database Creator<span class="small" id="version"></span></h4>
+                        <h5 id="name">Simple Database Creator<span class="small ml-2" id="version"></span></h5>
                     </div>
                 </div>
             </div>
@@ -78,8 +98,8 @@
                     <div class="col">
                         <div class="table-responsive">
 
-                            <div class="text-right mb-3">
-                                <button type="button" name="add" id="add" class="btn btn-info">Add New</button>
+                            <div class="text-center mb-3">
+                                <button type="button" id="btn_add" class="btn btn-info">Add New Row</button>
                             </div>
 
                             <table id="data_table" class="table table-bordered table-striped rounded">
@@ -93,6 +113,22 @@
                 </div>
             </div>
         <!-- DATA TABLE -->
+
+        <!-- SHOW JSON BUTTON -->
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col text-center">
+                        <button id="btn_showdata" class="btn btn-dark text-white">Show JSON Data</button>
+                    </div>
+                </div>
+            </div>
+        <!-- SHOW JSON BUTTON -->
+
+        <!-- FOOTER -->
+            <footer class="container-fluid footer py-1 bg-dark text-white text-center">
+                Simple Database Creator - Copyright 2020 by <a href="http://ebolax.org" target="_blank" class="text-white">ebolax</a>
+            </footer>
+        <!-- FOOTER -->
 
         <!-- ALERT MESSAGE -->
         <div id="alert_message" class="text-center"></div>
