@@ -8,13 +8,13 @@
     "uploads_path": "uploads/",
     "pageLength": 10,
     "id_field_name": "_id",
-    "columntypes": ["textbox", "textarea", "select", "date", "time", "file", "image", "sound", "video"],
+    "columntypes": ["textbox", "number", "textarea", "select", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {
             "id": "username",
             "name": "Username",
             "type": "textbox",
-            "description": "Write username in this field",
+            "description": "Enter username in this field",
             "icon": "fa-th-large",
             "width": "100px",
             "required": true,
@@ -23,6 +23,20 @@
             "searchable": true,
             "bold": true,
             "isEmail": false
+        },
+        {
+            "id": "number",
+            "name": "Number",
+            "type": "number",
+            "description": "Enter a float number in this field",
+            "width": "200px",
+            "icon": "fa-sort-numeric-asc",
+            "required": false,
+            "default_value": "",
+            "sortable": true,
+            "searchable": true,
+            "bold": true,
+            "decimals": 2
         },
 		{
             "id": "content",

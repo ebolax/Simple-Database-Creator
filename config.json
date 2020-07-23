@@ -7,13 +7,13 @@
     "uploads_path": "uploads/",
     "pageLength": 10,
     "id_field_name": "_id",
-    "columntypes": ["textbox", "textarea", "select", "date", "time", "file", "image", "sound", "video"],
+    "columntypes": ["textbox", "number", "textarea", "select", "date", "time", "file", "image", "sound", "video"],
     "columns":[
         {
             "id": "username",
             "name": "Username",
             "type": "textbox",
-            "description": "Write username in this field",
+            "description": "Enter username in this field",
             "width": "200px",
             "icon": "fa-th-large",
             "required": true,

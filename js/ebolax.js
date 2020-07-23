@@ -113,6 +113,12 @@ function setup()
 
                     break;
 
+                case "number":
+
+                    form_fields += '<input type="text" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
+
+                    break;
+
                 case "textarea":
 
                     form_fields += '<textarea class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" rows="3" ' + (config.columns[a].required ? 'required' : '')  + '>' + config.columns[a].default_value  + '</textarea>';
@@ -187,6 +193,33 @@ function setup()
     }
 
     $('#modal_form .modal-body').html(form_fields);
+
+    // number format
+    for (var a in config.columns)
+    {
+        if (config.columns[a].type == "number")
+        {
+            $('#' + config.columns[a].id).on("blur", function()
+            {
+                var val = $(this).val();
+
+                if (config.columns[a].decimals > 0)
+                {
+                    val = parseFloat(val);
+                    val = val.toFixed(config.columns[a].decimals);
+                }
+                else
+                {
+                    val = parseInt(val);
+                }
+
+                console.log(val);
+                if (Number.isNaN(val)) val = 0;
+
+                $(this).val(val);
+            });
+        }
+    }
 
     // set datepickers
     for (var a in config.columns)
@@ -369,6 +402,7 @@ function setup()
             switch (config.columns[a].type)
             {
                 case "textbox":
+                case "number":
                 case "select":
                 case "date":
                 case "time":
@@ -469,6 +503,7 @@ function setup()
             switch (config.columns[a].type)
             {
                 case "textbox":
+                case "number":
                 case "select":
                 case "date":
                 case "time":
