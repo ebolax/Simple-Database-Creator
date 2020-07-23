@@ -1,7 +1,7 @@
 {
     "encoding": "UTF-8",
     "database_path": "database/database.json",
-    "server": "do_json.php",
+    "server": "server.php",
     "database_tablename": "table1",
     "json_pretty_print": true,
     "uploads_path": "uploads/",
@@ -14,6 +14,7 @@
             "name": "Username",
             "type": "textbox",
             "description": "Enter username in this field",
+            "maxlength": 10,
             "width": "200px",
             "icon": "fa-th-large",
             "required": true,

@@ -109,7 +109,7 @@ function setup()
                 case "date":
                 case "time":
 
-                    form_fields += '<input type="' + (config.columns[a].isEmail ? "email" : "text") + '" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '')  + ' />';
+                    form_fields += '<input type="' + (config.columns[a].isEmail ? "email" : "text") + '" class="form-control mb-3 focus" id="' + config.columns[a].id  + '" name="' + config.columns[a].id  + '" value="' + config.columns[a].default_value  + '" ' + (config.columns[a].required ? 'required' : '') + ' ' + (config.columns[a].maxlength > 0 ? 'maxlength="' + config.columns[a].maxlength + '"' : '')  + ' />';
 
                     break;
 
